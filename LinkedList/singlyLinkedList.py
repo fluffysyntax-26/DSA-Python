@@ -74,12 +74,14 @@ class LinkedList:
         
         return result
     
+    # loop through all elements in a linked list
     def traverse(self): 
         current = self.head
         while current is not None: 
             print(current.value)
             current = current.next
 
+    # search using key 
     def search(self, value): 
         current = self.head
         index = 0
@@ -91,8 +93,8 @@ class LinkedList:
         
         return "Element not found"
     
+    # search using index
     def get(self, index): 
-
         if index < 0 or index > self.length: 
             raise ValueError("Index Out of Bounds")
         
@@ -104,12 +106,62 @@ class LinkedList:
             current = current.next
         return current
     
+    # update using index
     def set(self, value, index): 
         temp = self.get(index)
         if temp is not None: 
             temp.value = value
             return "Element Set Successfully"
         return "Could not change Element Value"
+
+    # remove first node and return
+    def pop_first(self): 
+        if self.length == 0: 
+            return None
+        
+        popped_node = self.head
+        if self.length == 1: 
+            self.head = None
+            self.tail = None
+            return popped_node
+        else: 
+            self.head = self.head.next
+            popped_node.next = None
+
+        self.length -= 1
+        return popped_node.value
+
+    # remove last node and return
+    def pop(self): 
+        if self.length == 0: 
+            return None
+        
+        popped_node = self.tail
+
+        if self.length == 1: 
+            self.head = None
+            self.tail = None
+            return popped_node
+        
+        else: 
+            temp = self.head
+            while temp.next is not self.tail: 
+                temp = temp.next
+                
+            self.tail = temp
+            temp.next = None
+            self.length -= 1
+
+        return popped_node
+    
+    # remove using index
+    def remove(self, index): 
+        current = self.head
+        for _ in range(index): 
+            current = current.next
+
+        current.next = current.next.next
+        del current
 
 
     
@@ -130,3 +182,6 @@ print(ll.get(4))
 
 print(ll.set(14, 2))
 print(ll)
+
+print(ll.pop_first())
+print(ll.pop().value)
