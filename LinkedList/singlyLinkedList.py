@@ -155,13 +155,33 @@ class LinkedList:
         return popped_node
     
     # remove using index
-    def remove(self, index): 
-        current = self.head
-        for _ in range(index): 
-            current = current.next
+    def remove(self, index):
+        if index < 0 or index >= self.length:
+            raise ValueError("Index out of bounds")
 
-        current.next = current.next.next
-        del current
+        # remove head
+        if index == 0:
+            return self.pop_first()
+
+        # remove tail
+        if index == self.length - 1:
+            return self.pop()
+
+        prev = self.head
+        for _ in range(index - 1):
+            prev = prev.next
+
+        removed_node = prev.next
+        prev.next = removed_node.next
+        removed_node.next = None
+
+        self.length -= 1
+        return removed_node.value
+    
+    def oblierate(self): 
+        self.head = 0
+        self.tail = 0
+        self.length = 0
 
 
     
